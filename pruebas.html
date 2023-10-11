@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<body>
+
+    <style>       
+        #contenedor-principal {
+            display: none;
+        }
+        .text-container {
+            width:64rem;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column !important;
+            justify-content: center !important;
+            align-items: center !important;
+            padding: 2rem;
+
+        }
+        .text-container p{
+            font-size: 16px !important;
+        }
+        .text-container h1, .text-container h2 {
+            font-size: 29px !important;
+        }
+
+        #miniatura {
+            width: 100%;     
+            height: 300px;
+            cursor: pointer;  
+            border-radius: 0;
+        }
+
+        #video {
+            display: none;
+            width: 100%;
+            height: 315px;
+            cursor: pointer;
+        }
+
+        .video-container{
+            position: relative;
+            width: 45%;
+            cursor: pointer;
+        }
+        #play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 68px;
+            height: 48px;
+            z-index: 2;
+        }
+        div#titulo_beneficios, div#parrafo_beneficios, div#titulo_servicios, div#parrafo_servicios, div#titulo_mejores, div#parrafo_mejores, div#titulo_contacto, div#parrafo_contacto{
+            width: 100%;
+        }
+        #imagen img {
+            width: 100%;     
+            height: 300px;
+            border-radius: 0px;
+        }
+        div#imagen{
+            width: 45%;
+        }
+
+        
+        @media only screen and (max-width: 580px) {
+            .dolor-celular{
+            width: 80% !important;
+            } 
+            .dolor-celular b{
+                font-size: 20px !important;
+            }
+            #sticky-container-celular{
+                width: 80% !important;
+            }
+            .text-container{
+            width: 100% !important;
+            }
+            .text-container h1{
+            line-height: 35px !important;
+            }
+            #video{
+                display: none;
+            }
+            #miniatura {
+                height: 250px !important;
+            }
+            .video-container{
+                width: 100% !important;
+            }
+            #imagen{
+                display: flex;
+                margin: 0 auto;
+                width: 100% !important;
+            }
+            #imagen img{
+                height: 315px !important;
+            }
+            
+        }
+        /* Media query para laptops pequeñas */
+        @media screen and (min-width: 581px) and (max-width: 1366px) {
+            .text-container{
+                width: 100% !important;
+            }
+            .nav{
+                border-radius: 0px !important;
+            }
+            .dolor-celular{
+                width: 80% !important;
+            }
+            #sticky-container-celular{
+                width:65% !important;
+            }
+            #imagen{
+                display: flex;
+                margin: 0 auto;
+                width: 45% !important;
+            }
+            #imagen img{
+                height:315PX !important;
+            }
+        }
+    </style>
+
+    <div id="contenedor-principal">
+        <div id="dolor" class="dolor-celular"  style="width:50rem; margin: 0 auto;margin-top:2rem">
+          <p>
+              <b>
+                  COMPLETE YOUR PROJECT WITH OUR IN-DEPTH SOIL EXPERTISE.
+              </b>
+          </p>
+        </div>
+    
+        <div class="sticky-container" id="sticky-container-celular" style="width:50rem; height:50px;margin-top:2rem">
+        <p>
+                <strong>Email: grounddata@geotechnicalengineering-1.com</strong>
+        </p>
+        </div>
+
+        <div class="text-container">
+            <div id="titulo_beneficios" style="text-align: center;"></div>
+            <br>
+            
+            <div class="video-container" onclick="showVideo()">
+                <img id="miniatura" src="" alt="Video Miniatura" loading="lazy">
+                <div id="play-button">
+                    <svg viewBox="0 0 68 48" fill="#f00">           <path d="M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z"></path>           <path d="M 45,24 27,14 27,34" fill="#fff"></path>         </svg>
+                </div>
+                <div id="video"></div>
+            </div>
+            
+            <br>
+            <div id="parrafo_beneficios"></div>
+            <div id="titulo_servicios"></div>
+            <div id="parrafo_servicios"></div>
+            <br>
+            <div id="imagen"></div>
+            <br>
+            <div id="titulo_mejores"></div>
+            <div id="parrafo_mejores"></div>
+            <br>
+            <div id="titulo_contacto"></div>
+            <div id="parrafo_contacto"></div>
+        </div>
+        
+
+    </div>    
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            moveContentBelowNav();
+            fetchData();
+        });
+
+        function moveContentBelowNav() {
+            if (!document.querySelector(".hidden-sm")) {
+                const contenedorPrincipal = document.getElementById("contenedor-principal");
+                contenedorPrincipal && (contenedorPrincipal.style.display = "block");
+            }
+
+            const h = document.querySelector("#site-home");
+            const contactInfo = document.querySelector('#contenedor-principal');
+            h && contactInfo && h.insertAdjacentElement('beforebegin', contactInfo);
+        }
+
+        function fetchData() {
+            const subdomain = window.location.hostname.split('.')[0];
+            $.ajax({
+                url: 'https://my-json-server.typicode.com/HumbertoDiomedi/ApiPrueba/contenidos',
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    const contenido = data.find(item => item.id === subdomain);
+                    contenido ? populateData(contenido) : showError('Contenido no encontrado.');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    showError('Hubo un error: ' + textStatus + ' - ' + errorThrown);
+                }
+            });
+        }
+
+
+
+        let currentContent = null;  
+
+        function populateData(contenido) {
+            currentContent = contenido; 
+            const properties = ['titulo_beneficios', 'miniatura', 'parrafo_beneficios', 'titulo_servicios', 'parrafo_servicios', 'titulo_mejores', 'parrafo_mejores', 'titulo_contacto', 'parrafo_contacto'];
+            properties.forEach(prop => {
+                const elem = document.getElementById(prop);
+                if (elem) {
+                    if (prop === 'miniatura') {
+                        elem.src = contenido[prop];
+                    } else {
+                        elem.innerHTML = contenido[prop];
+                    }
+                }
+            });
+            document.getElementById('imagen').innerHTML = `<img src="${contenido.imagen}" alt="Imagen de Mecánica de Suelos">`;
+        }
+
+        function handleAxiosErrors(error) {
+            let message = 'Hubo un error al hacer la solicitud: ' + error.message;
+            if (error.response) {
+                message = 'Hubo un error en la respuesta del servidor: ' + error.response.status + ' - ' + error.response.statusText;
+            } else if (error.request) {
+                message = 'No se recibió ninguna respuesta del servidor. Es posible que haya un problema de red o que el servidor esté offline.';
+            }
+            showError(message);
+        }
+
+        function showVideo() {
+            const miniatura = document.getElementById('miniatura');
+            const playButton = document.getElementById('play-button');
+            const videoDiv = document.getElementById('video');
+
+            if (currentContent && currentContent.video) {
+                [miniatura, playButton].forEach(el => el.style.display = "none");
+                videoDiv.style.display = "block";
+                videoDiv.innerHTML = `<iframe width="100%" height="315px" src="${currentContent.video}?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe>`;
+            } else {
+                console.error("No se pudo obtener la URL del video.");
+            }
+        }
+
+        function showError(message) {
+            console.error(message);
+            document.body.innerHTML = `<p>${message}</p>`;
+        }
+
+    </script>
+</body>
+</html>
